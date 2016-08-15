@@ -1,0 +1,12 @@
+target/
+.cache
+.classpath
+.project
+.settings/
+/scalalib/fetchedSources/
+/partest/fetchedSources/
+/cli/pack/
+/.idea/
+/.idea_modules/
+bin/
+Contact GitHub API Training Shop Blog About

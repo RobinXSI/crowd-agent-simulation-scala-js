@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>The Scala.js Tutorial</title>
+</head>
+<body>
+<div>
+    <canvas style="display: block" id="canvas" width="255" height="255"/>
+</div>
+
+
+<!-- Include Scala.js compiled code -->
+<!-- Include JavaScript dependencies -->
+<script type="text/javascript" src="./target/scala-2.11/crowd-agent-simulation-scala-js-jsdeps.js"></script>
+<script type="text/javascript" src="./target/scala-2.11/crowd-agent-simulation-scala-js-fastopt.js"></script>
+<!-- Run tutorial.webapp.TutorialApp -->
+<script type="text/javascript">
+    webapp.MainApp().main(document.getElementById('canvas'));
+</script>
+</body>
+</html>
