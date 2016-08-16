@@ -17,10 +17,9 @@ object MainApp {
     def run() = {
       pathFindAlgorithm.findPath(simulationMap)
       gridVisualizer.draw(simulationMap)
-      val calculator: (Coordinate) => Coordinate = gridVisualizer.coordinateCalculator()
-      val calculator2: (Coordinate) => Coordinate = gridVisualizer.coordinateCalculator2()
-      directionVisualizer.draw(simulationMap, calculator, calculator2)
-
+      val hexagonalCalculatorCenter: (Coordinate) => Coordinate = gridVisualizer.hexagonalCalculatorCenter()
+      val hexagonalCalculatorDirection: (Coordinate) => Coordinate = gridVisualizer.hexagonalCalculatorDirection()
+      directionVisualizer.draw(simulationMap, hexagonalCalculatorCenter, hexagonalCalculatorDirection)
     }
 
     dom.window.setInterval(() => run(), 50)

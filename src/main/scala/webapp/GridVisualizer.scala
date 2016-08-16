@@ -17,7 +17,7 @@ class GridVisualizer(canvas: Canvas) {
   private def calculateCellParameters(simulationMap: SimulationMap, cell: Cell) = {
     cellSize = math.min(canvas.width / (simulationMap.width + 0.5), canvas.height / (simulationMap.height + 0.5))
     createHexagon(cell.coordinate, cell.state)
-    val centerOfHexagon: Coordinate = coordinateCalculator()(cell.coordinate)
+    val centerOfHexagon: Coordinate = hexagonalCalculatorCenter()(cell.coordinate)
 
 
 
@@ -66,12 +66,12 @@ class GridVisualizer(canvas: Canvas) {
     ctx.stroke()
   }
 
-  def coordinateCalculator2(): (Coordinate) => Coordinate  = (coordinate: Coordinate) => {
+  def hexagonalCalculatorDirection(): (Coordinate) => Coordinate  = (coordinate: Coordinate) => {
     if (coordinate.y != 0) Coordinate(coordinate.x * cellSize * 0.5, coordinate.y * widthToRadius(cellSize) * 1.5)
     else Coordinate(coordinate.x * cellSize, coordinate.y * widthToRadius(cellSize) * 1.5)
   }
 
-  def coordinateCalculator(): (Coordinate) => Coordinate  = {
+  def hexagonalCalculatorCenter(): (Coordinate) => Coordinate  = {
     (coordinate: Coordinate) => {
       val x = coordinate.x * cellSize + 0.5 * cellSize
       val y = coordinate.y * widthToRadius(cellSize) * 3 / 4 * 2 + widthToRadius(cellSize)
