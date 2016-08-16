@@ -6,31 +6,28 @@ import org.scalajs.dom.html.Canvas
 class DirectionVisualizer(canvas: Canvas) {
   val ctx = canvas.getContext("2d").asInstanceOf[dom.CanvasRenderingContext2D]
 
-  def draw(simulationMap: SimulationMap, hexagonalCalculatorCenter: (Coordinate) => Coordinate, hexagonalCalculatorDirection: (Coordinate) => Coordinate) = {
+  def draw(simulationMap: SimulationMap, centerCalculator: (Coordinate) => Coordinate) = {
     for {
       cell <- simulationMap.grid.flatten
-    } calculateCellDirections(simulationMap, cell, hexagonalCalculatorCenter, hexagonalCalculatorDirection)
+    } calculateCellDirections(simulationMap, cell, centerCalculator)
   }
 
-  private def calculateCellDirections(simulationMap: SimulationMap,
-                                      cell: Cell,
-                                      hexagonalCalculatorCenter: (Coordinate) => Coordinate,
-                                      hexagonalCalculatorDirection: (Coordinate) => Coordinate) =
+  private def calculateCellDirections(simulationMap: SimulationMap, cell: Cell, centerCalculator: (Coordinate) => Coordinate) =
     cell.goto match {
     case Some(goto) => {
       val lineLenght = 50
-      val coordinateDirectionInSquareSystem: Coordinate = goto.coordinate - cell.coordinate
-      val coordinateDirectionInHexagonalSystem: Coordinate = hexagonalCalculatorDirection(coordinateDirectionInSquareSystem)
-      val positionFromInHexagonalSystem: Coordinate = hexagonalCalculatorCenter(cell.coordinate)
-      val resizedDirectionInHexagonalSystem = coordinateDirectionInHexagonalSystem.normalize() * lineLenght
-      val positionToInHexagonalSystem: Coordinate = positionFromInHexagonalSystem + resizedDirectionInHexagonalSystem
+
+      val centerFrom = centerCalculator(cell.coordinate)
+      val centerTo = centerCalculator(goto.coordinate)
+      val difference = (centerFrom - centerTo).normalize() * lineLenght
+      val pointer = centerFrom + difference * -1
 
       ctx.beginPath()
       ctx.lineWidth = 5
       ctx.strokeStyle = "blue"
-      ctx.arc(positionFromInHexagonalSystem.x, positionFromInHexagonalSystem.y, 5, 0, math.Pi * 2)
-      ctx.moveTo(positionFromInHexagonalSystem.x, positionFromInHexagonalSystem.y)
-      ctx.lineTo(positionToInHexagonalSystem.x, positionToInHexagonalSystem.y)
+      ctx.arc(centerFrom.x, centerFrom.y, 5, 0, math.Pi * 2)
+      ctx.moveTo(centerFrom.x, centerFrom.y)
+      ctx.lineTo(pointer.x, pointer.y)
       ctx.stroke()
       ctx.closePath()
     }

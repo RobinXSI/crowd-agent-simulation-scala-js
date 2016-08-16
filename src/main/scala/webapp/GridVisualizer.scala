@@ -30,8 +30,6 @@ class GridVisualizer(canvas: Canvas) {
       case Some(n) => ctx.fillText(n.toString,centerOfHexagon.x,centerOfHexagon.y + 30)
       case None => //
     }
-
-
   }
 
   private def widthToRadius(width: Double): Double = width / math.sqrt(3)
@@ -69,12 +67,6 @@ class GridVisualizer(canvas: Canvas) {
     ctx.closePath()
     ctx.fill()
     ctx.stroke()
-  }
-
-  def hexagonalCalculatorDirection(): (Coordinate) => Coordinate  = (coordinate: Coordinate) => {
-//    if (coordinate.y != 0) Coordinate(coordinate.x * cellSize * 0.5, coordinate.y * widthToRadius(cellSize) * 1.5)
-    if (coordinate.y % 2 == 0) Coordinate(coordinate.x * cellSize, coordinate.y * widthToRadius(cellSize) * 1.5)
-    else Coordinate(coordinate.x * cellSize, coordinate.y * widthToRadius(cellSize) * 1.5)
   }
 
   def hexagonalCalculatorCenter(): (Coordinate) => Coordinate  = {
