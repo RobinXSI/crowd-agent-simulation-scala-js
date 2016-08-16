@@ -18,11 +18,15 @@ class GridVisualizer(canvas: Canvas) {
     cellSize = math.min(canvas.width / (simulationMap.width + 0.5), canvas.height / (simulationMap.height + 0.5))
     createHexagon(cell.coordinate, cell.state)
     val centerOfHexagon: Coordinate = coordinateCalculator()(cell.coordinate)
-    ctx.fillStyle = "green"
 
-    ctx.beginPath()
-    ctx.arc(centerOfHexagon.x, centerOfHexagon.y, 5, 0, 2 * math.Pi)
-    ctx.fill()
+
+
+    if (cell.state == Wall) ctx.fillStyle = "white"
+    else ctx.fillStyle = "black"
+    ctx.font = "13px Arial"
+    ctx.textAlign = "center"
+    ctx.fillText(cell.toString,centerOfHexagon.x,centerOfHexagon.y);
+
   }
 
   private def widthToRadius(width: Double): Double = width / math.sqrt(3)
