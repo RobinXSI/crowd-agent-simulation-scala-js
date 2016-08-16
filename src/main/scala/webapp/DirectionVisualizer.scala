@@ -16,33 +16,24 @@ class DirectionVisualizer(canvas: Canvas) {
     } calculateCellDirections(simulationMap, cell, calculator, calculator2)
   }
 
-  private def calculateCellDirections(simulationMap: SimulationMap, cell: Cell, calculator: (Coordinate) => Coordinate, calculator2: (Coordinate) => Coordinate) = {
-    val cellSize = math.min(canvas.width / (simulationMap.width + 0.5) , canvas.height / (simulationMap.height + 0.5))
-    val cell1 = cell
-    val cell2 = cell.goto
-
-    val directionX = cell2.coordinate.x - cell1.coordinate.x
-    val directionY = cell2.coordinate.y - cell1.coordinate.y
-
-    val test: Coordinate = calculator2(Coordinate(directionX, directionY))
-
-
-    val coordinateTo: Coordinate = Coordinate(cell1.coordinate.x + directionX, cell1.coordinate.y + directionY)
-    val calculatorTo: Coordinate = calculator(coordinateTo)
-    val calculatorFrom: Coordinate = calculator(cell1.coordinate)
+  private def calculateCellDirections(simulationMap: SimulationMap, cell: Cell, hexagonalCalculatorPosition: (Coordinate) => Coordinate, hexagonalCalculatorDirection: (Coordinate) => Coordinate) = {
+    val lineLenght = 50
+    val coordinateDirectionInSquareSystem: Coordinate = cell.goto.coordinate - cell.coordinate
+    val coordinateDirectionInHexagonalSystem: Coordinate = hexagonalCalculatorDirection(coordinateDirectionInSquareSystem)
+    val positionFromInHexagonalSystem: Coordinate = hexagonalCalculatorPosition(cell.coordinate)
+    val resizedDirectionInHexagonalSystem = coordinateDirectionInHexagonalSystem.normalize() * lineLenght
+    val positionToInHexagonalSystem: Coordinate = positionFromInHexagonalSystem + resizedDirectionInHexagonalSystem
 
 
     ctx.beginPath()
     ctx.lineWidth = 5
     ctx.strokeStyle = "blue"
-    ctx.moveTo(calculatorFrom.x, calculatorFrom.y)
-    ctx.lineTo(calculatorFrom.x + test.x, calculatorFrom.y + test.y)
+    ctx.moveTo(positionFromInHexagonalSystem.x, positionFromInHexagonalSystem.y)
+    ctx.lineTo(positionToInHexagonalSystem.x, positionToInHexagonalSystem.y)
     ctx.stroke()
     ctx.closePath()
 
 
-//    ctx.strokeStyle = "red"
-//    ctx.beginPath()
 //    ctx.arc(calculatorTo.x, calculatorTo.y, 5, 0, math.Pi * 2)
 //    ctx.stroke()
 //    ctx.closePath()

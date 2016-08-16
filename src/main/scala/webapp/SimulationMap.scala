@@ -54,7 +54,7 @@ class SimulationMap(val grid: Vector[Vector[Cell]]) {
     else get(Coordinate(cell.coordinate.x - 1, cell.coordinate.y))
   }
 
-  def get(coordinate: Coordinate): Option[Cell] = Some(grid(coordinate.y)(coordinate.x))
+  def get(coordinate: Coordinate): Option[Cell] = Some(grid(coordinate.y.toInt)(coordinate.x.toInt))
 
 
 }

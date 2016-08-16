@@ -39,8 +39,8 @@ class GridVisualizer(canvas: Canvas) {
     val x = (center.x * cellSize) + radius * math.cos(angleRadiant) + cellSize / 2
     val y = (center.y * radius * 3 / 4 * 2) + radius * math.sin(angleRadiant) + radius
 
-    if (center.y % 2 == 0) Coordinate(x.toInt, y.toInt)
-    else Coordinate((x + cellSize / 2).toInt, y.toInt)
+    if (center.y % 2 == 0) Coordinate(x, y)
+    else Coordinate(x + cellSize / 2, y)
   }
 
   private def createHexagon(center: Coordinate, state: CellState) = {
@@ -66,21 +66,18 @@ class GridVisualizer(canvas: Canvas) {
     ctx.stroke()
   }
 
-  def coordinateCalculator2(): (Coordinate) => Coordinate  = {
-    (coordinate: Coordinate) => {
-      val x = (coordinate.x * cellSize).toInt
-      val y = (coordinate.y * widthToRadius(cellSize) * 1.5).toInt
-      Coordinate(x, y)
-    }
+  def coordinateCalculator2(): (Coordinate) => Coordinate  = (coordinate: Coordinate) => {
+    if (coordinate.y != 0) Coordinate(coordinate.x * cellSize * 0.5, coordinate.y * widthToRadius(cellSize) * 1.5)
+    else Coordinate(coordinate.x * cellSize, coordinate.y * widthToRadius(cellSize) * 1.5)
   }
 
   def coordinateCalculator(): (Coordinate) => Coordinate  = {
     (coordinate: Coordinate) => {
-      val x = (coordinate.x * cellSize + 0.5 * cellSize).toInt
-      val y = (coordinate.y * widthToRadius(cellSize) * 3 / 4 * 2 + widthToRadius(cellSize)).toInt
+      val x = coordinate.x * cellSize + 0.5 * cellSize
+      val y = coordinate.y * widthToRadius(cellSize) * 3 / 4 * 2 + widthToRadius(cellSize)
 
       if (coordinate.y % 2 == 0) Coordinate(x, y)
-      else Coordinate((x + cellSize / 2).toInt, y)
+      else Coordinate(x + cellSize / 2, y)
     }
   }
 }
