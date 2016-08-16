@@ -5,6 +5,7 @@ object MapBuilder {
   def typeFromChar(char: Char): CellState = {
     char match {
       case 'x' => Wall
+      case 'e' => End
       case '.' => Empty
     }
   }

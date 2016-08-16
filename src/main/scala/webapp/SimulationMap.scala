@@ -17,7 +17,7 @@ class SimulationMap(val grid: Vector[Vector[Cell]]) {
   }
 
   def accessibleNeighbors(cell: Cell): Vector[Cell] = {
-    neighbors(cell).flatten.filter(c => true) // todo state wall
+    neighbors(cell).flatten.filter(c => c.state != Wall) // todo replace with case match
   }
 
   private def topLeft(cell: Cell): Option[Cell] = {
