@@ -17,9 +17,8 @@ class PathFindAlgorithm {
 
   def linkNeighbors(simulationMap: SimulationMap, actualCell: Cell): Unit = {
     val notSearchedNeighbors: Vector[Cell] = simulationMap.accessibleNeighbors(actualCell).filter(neighbor => neighbor.goto.isEmpty)
-    if (notSearchedNeighbors.size != 0) println(notSearchedNeighbors.size)
+    if (notSearchedNeighbors.nonEmpty) println(notSearchedNeighbors.size)
     notSearchedNeighbors.foreach(neighbor => neighbor.goto = Some(actualCell))
     notSearchedNeighbors.foreach(neighbor => linkNeighbors(simulationMap, neighbor))
   }
-
 }
