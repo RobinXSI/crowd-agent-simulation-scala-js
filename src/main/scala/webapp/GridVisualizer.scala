@@ -66,10 +66,18 @@ class GridVisualizer(canvas: Canvas) {
     ctx.stroke()
   }
 
+  def coordinateCalculator2(): (Coordinate) => Coordinate  = {
+    (coordinate: Coordinate) => {
+      val x = (coordinate.x * cellSize).toInt
+      val y = (coordinate.y * widthToRadius(cellSize) * 1.5).toInt
+      Coordinate(x, y)
+    }
+  }
+
   def coordinateCalculator(): (Coordinate) => Coordinate  = {
     (coordinate: Coordinate) => {
       val x = (coordinate.x * cellSize + 0.5 * cellSize).toInt
-      val y = (coordinate.y * widthToRadius(cellSize) * 3 / 4 * 2 + 0.5 * cellSize).toInt
+      val y = (coordinate.y * widthToRadius(cellSize) * 3 / 4 * 2 + widthToRadius(cellSize)).toInt
 
       if (coordinate.y % 2 == 0) Coordinate(x, y)
       else Coordinate((x + cellSize / 2).toInt, y)

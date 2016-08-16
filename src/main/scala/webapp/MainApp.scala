@@ -18,7 +18,8 @@ object MainApp {
       pathFindAlgorithm.findPath(simulationMap)
       gridVisualizer.draw(simulationMap)
       val calculator: (Coordinate) => Coordinate = gridVisualizer.coordinateCalculator()
-      directionVisualizer.draw(simulationMap, calculator)
+      val calculator2: (Coordinate) => Coordinate = gridVisualizer.coordinateCalculator2()
+      directionVisualizer.draw(simulationMap, calculator, calculator2)
 
     }
 
