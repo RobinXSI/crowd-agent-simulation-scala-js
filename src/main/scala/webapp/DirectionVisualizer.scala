@@ -30,6 +30,6 @@ class DirectionVisualizer(canvas: Canvas) {
       ctx.stroke()
       ctx.closePath()
     }
-    case None => println(cell)
+    case None => // do nothing
   }
 }

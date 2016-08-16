@@ -4,25 +4,21 @@ class PathFindAlgorithm {
   def findPath(simulationMap: SimulationMap) = {
     val allCells = simulationMap.grid.flatten
 
+    val goal: Cell = allCells.find(c => c.state == End).orNull
 
-    //    allCells.foreach(cell => {
-    //      cell.goto = simulationMap.accessibleNeighbors(cell).head
-    //    })
 
-    val goal: Cell = allCells.find(c => c.state == Wall).orNull
+
 
     linkNeighbors(simulationMap, goal)
+//    println(simulationMap.accessibleNeighbors(goal).map(c => c.goto))
   }
 
 
   def linkNeighbors(simulationMap: SimulationMap, actualCell: Cell): Unit = {
-    simulationMap.accessibleNeighbors(actualCell).foreach(neighbor => neighbor.goto match {
-      case None => {
-        neighbor.goto = Some(actualCell)
-        linkNeighbors(simulationMap, neighbor)
-      }
-      case Some(_) => println("")
-    })
+    val notSearchedNeighbors: Vector[Cell] = simulationMap.accessibleNeighbors(actualCell).filter(neighbor => neighbor.goto.isEmpty)
+    if (notSearchedNeighbors.size != 0) println(notSearchedNeighbors.size)
+    notSearchedNeighbors.foreach(neighbor => neighbor.goto = Some(actualCell))
+    notSearchedNeighbors.foreach(neighbor => linkNeighbors(simulationMap, neighbor))
   }
 
 }
