@@ -25,7 +25,12 @@ class GridVisualizer(canvas: Canvas) {
     else ctx.fillStyle = "black"
     ctx.font = "13px Arial"
     ctx.textAlign = "center"
-    ctx.fillText(cell.toString,centerOfHexagon.x,centerOfHexagon.y);
+    ctx.fillText(cell.toString,centerOfHexagon.x,centerOfHexagon.y)
+    cell.goto match {
+      case Some(n) => ctx.fillText(n.toString,centerOfHexagon.x,centerOfHexagon.y + 30)
+      case None => //
+    }
+
 
   }
 
@@ -67,7 +72,8 @@ class GridVisualizer(canvas: Canvas) {
   }
 
   def hexagonalCalculatorDirection(): (Coordinate) => Coordinate  = (coordinate: Coordinate) => {
-    if (coordinate.y != 0) Coordinate(coordinate.x * cellSize * 0.5, coordinate.y * widthToRadius(cellSize) * 1.5)
+//    if (coordinate.y != 0) Coordinate(coordinate.x * cellSize * 0.5, coordinate.y * widthToRadius(cellSize) * 1.5)
+    if (coordinate.y % 2 == 0) Coordinate(coordinate.x * cellSize, coordinate.y * widthToRadius(cellSize) * 1.5)
     else Coordinate(coordinate.x * cellSize, coordinate.y * widthToRadius(cellSize) * 1.5)
   }
 

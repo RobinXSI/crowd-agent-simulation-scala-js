@@ -8,6 +8,7 @@ class PathFindAlgorithm {
 
 
 
+    goal.goto = Some(goal)
 
     linkNeighbors(simulationMap, goal)
 //    println(simulationMap.accessibleNeighbors(goal).map(c => c.goto))

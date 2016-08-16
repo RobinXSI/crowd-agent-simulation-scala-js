@@ -9,7 +9,7 @@ object MainApp {
 
   @JSExport
   def main(canvas: html.Canvas): Unit = {
-    val simulationMap: SimulationMap = MapBuilder.createMap("..x...\n..x..e\n..x...\n..x...")
+    val simulationMap: SimulationMap = MapBuilder.createMap("..x...\n..x..e\n......\n..x...")
     val gridVisualizer: GridVisualizer = new GridVisualizer(canvas)
     val directionVisualizer: DirectionVisualizer = new DirectionVisualizer(canvas)
     val pathFindAlgorithm: PathFindAlgorithm = new PathFindAlgorithm()

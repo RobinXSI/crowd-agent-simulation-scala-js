@@ -12,7 +12,11 @@ class DirectionVisualizer(canvas: Canvas) {
     } calculateCellDirections(simulationMap, cell, hexagonalCalculatorCenter, hexagonalCalculatorDirection)
   }
 
-  private def calculateCellDirections(simulationMap: SimulationMap, cell: Cell, hexagonalCalculatorCenter: (Coordinate) => Coordinate, hexagonalCalculatorDirection: (Coordinate) => Coordinate) = cell.goto match {
+  private def calculateCellDirections(simulationMap: SimulationMap,
+                                      cell: Cell,
+                                      hexagonalCalculatorCenter: (Coordinate) => Coordinate,
+                                      hexagonalCalculatorDirection: (Coordinate) => Coordinate) =
+    cell.goto match {
     case Some(goto) => {
       val lineLenght = 50
       val coordinateDirectionInSquareSystem: Coordinate = goto.coordinate - cell.coordinate
