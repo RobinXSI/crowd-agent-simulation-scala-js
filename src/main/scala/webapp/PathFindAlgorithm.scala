@@ -17,6 +17,8 @@ class PathFindAlgorithm {
   def findPath(simulationMap: SimulationMap) = {
     val startCell: Cell = simulationMap.findGoal()
     frontier += CostPerCell(0, startCell)
+    visited = CostPerCell(0, startCell) +: visited
+
 
 
     while (frontier.nonEmpty) {

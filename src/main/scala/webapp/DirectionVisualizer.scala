@@ -15,7 +15,7 @@ class DirectionVisualizer(canvas: Canvas) {
   private def calculateCellDirections(simulationMap: SimulationMap, cell: Cell, centerCalculator: (Coordinate) => Coordinate) =
     cell.goto match {
     case Some(goto) => {
-      val lineLenght = 50
+      val lineLenght = 25
 
       val centerFrom = centerCalculator(cell.coordinate)
       val centerTo = centerCalculator(goto.coordinate)
@@ -23,7 +23,7 @@ class DirectionVisualizer(canvas: Canvas) {
       val pointer = centerFrom + difference * -1
 
       ctx.beginPath()
-      ctx.lineWidth = 5
+      ctx.lineWidth = 2
       ctx.strokeStyle = "blue"
       ctx.arc(centerFrom.x, centerFrom.y, 5, 0, math.Pi * 2)
       ctx.moveTo(centerFrom.x, centerFrom.y)
