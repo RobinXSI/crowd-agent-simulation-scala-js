@@ -9,7 +9,41 @@ object MainApp {
 
   @JSExport
   def main(canvas: html.Canvas): Unit = {
-    val simulationMap: SimulationMap = MapBuilder.createMap("..x........\n..x..e.....\n...........\n..x........")
+    val ctx = canvas.getContext("2d").asInstanceOf[dom.CanvasRenderingContext2D]
+    println(dom.window.innerHeight)
+    println(dom.window.outerHeight)
+    canvas.width = dom.window.outerWidth
+    canvas.height = dom.window.outerHeight - 500
+
+    val simulationMap: SimulationMap = MapBuilder.createMap(
+      "......x..x......x....x..........\n" +
+      "......x..x..x...x....x..........\n" +
+      "......x.....x...x....x..........\n" +
+      "......x.....x........x..........\n" +
+      "......x..x..x...x....x..........\n" +
+      "......x..x..x...x....x..........\n" +
+      "......x..x......x....x..........\n" +
+      "......x..xxxxxxxx....x..........\n" +
+      "......x..x...........x..........\n" +
+      "......x..x...........x..........\n" +
+      "......x..x...xxxxxxxxx..........\n" +
+      "......x..x...x..................\n" +
+      "......x..x...x..................\n" +
+      "......x..x...x.................e\n" +
+      "......x..x...x..................\n" +
+      "......x..x...x..................\n" +
+      "......x..x...x..................\n" +
+      "......x..x...x..................\n" +
+      "......x..x...x..................\n" +
+      "......x..x...x..................\n" +
+      "......x..x...x..................\n" +
+      "......x..x...x..................\n" +
+      "......x..x...x..................\n" +
+      "......x..x...x..................\n" +
+      ".........x......................\n" +
+      "......x..x...x..................\n" +
+      "......x..x...x..................\n" +
+      "......x..x...x..................")
     val gridVisualizer: GridVisualizer = new GridVisualizer(canvas)
     val directionVisualizer: DirectionVisualizer = new DirectionVisualizer(canvas)
     val pathFindAlgorithm: PathFindAlgorithm = new PathFindAlgorithm()
