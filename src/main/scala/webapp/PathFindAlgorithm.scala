@@ -1,24 +1,51 @@
 package webapp
 
+import scala.math.Ordering
+
+case class CostPerCell(cost: Int, cell: Cell)
+
 class PathFindAlgorithm {
+
+  implicit def orderingByCost[A <: CostPerCell]: Ordering[A] = Ordering.by(e => -e.cost)
+
+  val frontier = collection.mutable.PriorityQueue.empty[CostPerCell](
+    orderingByCost
+  )
+
+  var visited = collection.immutable.Queue.empty[CostPerCell]
+
   def findPath(simulationMap: SimulationMap) = {
-    val allCells = simulationMap.grid.flatten
-
-    val goal: Cell = allCells.find(c => c.state == End).orNull
-
+    val startCell: Cell = simulationMap.findGoal()
+    frontier += CostPerCell(0, startCell)
 
 
-    goal.goto = Some(goal)
+    while (frontier.nonEmpty) {
+      val current: CostPerCell = frontier.dequeue()
 
-    linkNeighbors(simulationMap, goal)
-//    println(simulationMap.accessibleNeighbors(goal).map(c => c.goto))
+      val currentNeighbors = simulationMap.accessibleNeighbors(current.cell)
+      currentNeighbors.foreach(next => {
+        val newCost = current.cost + simulationMap.getCost(current, next)
+
+        val costSoFar: Option[CostPerCell] = visited find { v => v.cell == next }
+        costSoFar match {
+          case None => {
+            test(current, next, newCost)
+          }
+          case Some(costSoFar) => {
+            if (newCost < costSoFar.cost) {
+              test(current, next, newCost)
+
+            }
+          }
+        }
+      })
+    }
+    println("end")
   }
 
-
-  def linkNeighbors(simulationMap: SimulationMap, actualCell: Cell): Unit = {
-    val notSearchedNeighbors: Vector[Cell] = simulationMap.accessibleNeighbors(actualCell).filter(neighbor => neighbor.goto.isEmpty)
-    if (notSearchedNeighbors.nonEmpty) println(notSearchedNeighbors.size)
-    notSearchedNeighbors.foreach(neighbor => neighbor.goto = Some(actualCell))
-    notSearchedNeighbors.foreach(neighbor => linkNeighbors(simulationMap, neighbor))
+  def test(current: CostPerCell, next: Cell, newCost: Int): frontier.type = {
+    visited = current +: visited
+    next.goto = Some(current.cell)
+    frontier += CostPerCell(newCost, next)
   }
 }

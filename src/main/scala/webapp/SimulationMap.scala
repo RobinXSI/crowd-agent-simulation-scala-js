@@ -1,6 +1,13 @@
 package webapp
 
 class SimulationMap(val grid: Vector[Vector[Cell]]) {
+  def getCost(from: CostPerCell, to: Cell) = 1
+
+  def findGoal(): Cell = {
+    val allCells = grid.flatten
+    allCells.find(c => c.state == End).orNull
+  }
+
 
   def height: Int = grid.length
   def width: Int = grid(0).length
