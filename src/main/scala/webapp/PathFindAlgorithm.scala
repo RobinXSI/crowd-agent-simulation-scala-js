@@ -44,7 +44,7 @@ class PathFindAlgorithm {
   }
 
   def test(current: CostPerCell, next: Cell, newCost: Int): frontier.type = {
-    visited = current +: visited
+    visited = CostPerCell(newCost, next) +: visited
     next.goto = Some(current.cell)
     frontier += CostPerCell(newCost, next)
   }
