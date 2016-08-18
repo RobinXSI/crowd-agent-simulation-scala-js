@@ -12,7 +12,7 @@ object MapBuilder {
 
   def createLineOfCellGrid(line: String, indexY: Int): Vector[Cell] = (for {
     (char, indexX) <- line.toList.zipWithIndex
-  } yield new Cell(Coordinate(indexX, indexY), typeFromChar(char))).toVector
+  } yield new Cell(PVector(indexX, indexY), typeFromChar(char))).toVector
 
   def createCellGrid(file: String): Vector[Vector[Cell]] = (for {
       (line, indexY) <- file.split("\n").zipWithIndex

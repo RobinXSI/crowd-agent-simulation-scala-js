@@ -13,7 +13,7 @@ object MainApp {
     println(dom.window.innerHeight)
     println(dom.window.outerHeight)
     canvas.width = dom.window.outerWidth
-    canvas.height = dom.window.outerHeight - 500
+    canvas.height = dom.window.outerHeight - 200
 
     val simulationMap: SimulationMap = MapBuilder.createMap(
       "......x..x......x....x..........\n" +
@@ -51,7 +51,7 @@ object MainApp {
     def run() = {
       pathFindAlgorithm.findPath(simulationMap)
       gridVisualizer.draw(simulationMap)
-      val hexagonalCalculatorCenter: (Coordinate) => Coordinate = gridVisualizer.hexagonalCalculatorCenter()
+      val hexagonalCalculatorCenter: (PVector) => PVector = gridVisualizer.hexagonalCalculatorCenter()
       directionVisualizer.draw(simulationMap, hexagonalCalculatorCenter)
     }
 

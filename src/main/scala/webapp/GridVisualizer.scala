@@ -16,8 +16,8 @@ class GridVisualizer(canvas: Canvas) {
 
   private def calculateCellParameters(simulationMap: SimulationMap, cell: Cell) = {
     cellSize = math.min(canvas.width / (simulationMap.width + 0.5), canvas.height / (simulationMap.height + 0.5))
-    createHexagon(cell.coordinate, cell.state)
-    val centerOfHexagon: Coordinate = hexagonalCalculatorCenter()(cell.coordinate)
+    createHexagon(cell.position, cell.state)
+    val centerOfHexagon: PVector = hexagonalCalculatorCenter()(cell.position)
 
 //    if (cell.state == Wall) ctx.fillStyle = "white"
 //    else ctx.fillStyle = "blue"
@@ -29,7 +29,7 @@ class GridVisualizer(canvas: Canvas) {
 
   private def widthToRadius(width: Double): Double = width / math.sqrt(3)
 
-  private def hexCorner(center: Coordinate, i: Integer) = {
+  private def hexCorner(center: PVector, i: Integer) = {
     val angleDegree = 60 * i + 30
     val angleRadiant = Math.PI / 180 * angleDegree
     val radius = widthToRadius(cellSize)
@@ -37,11 +37,11 @@ class GridVisualizer(canvas: Canvas) {
     val x = (center.x * cellSize) + radius * math.cos(angleRadiant) + cellSize / 2
     val y = (center.y * radius * 3 / 4 * 2) + radius * math.sin(angleRadiant) + radius
 
-    if (center.y % 2 == 0) Coordinate(x, y)
-    else Coordinate(x + cellSize / 2, y)
+    if (center.y % 2 == 0) PVector(x, y)
+    else PVector(x + cellSize / 2, y)
   }
 
-  private def createHexagon(center: Coordinate, state: CellState) = {
+  private def createHexagon(center: PVector, state: CellState) = {
     val numberOfEdges = 6
 
     ctx.strokeStyle = "grey"
@@ -64,13 +64,13 @@ class GridVisualizer(canvas: Canvas) {
     ctx.stroke()
   }
 
-  def hexagonalCalculatorCenter(): (Coordinate) => Coordinate  = {
-    (coordinate: Coordinate) => {
+  def hexagonalCalculatorCenter(): (PVector) => PVector  = {
+    (coordinate: PVector) => {
       val x = coordinate.x * cellSize + 0.5 * cellSize
       val y = coordinate.y * widthToRadius(cellSize) * 3 / 4 * 2 + widthToRadius(cellSize)
 
-      if (coordinate.y % 2 == 0) Coordinate(x, y)
-      else Coordinate(x + cellSize / 2, y)
+      if (coordinate.y % 2 == 0) PVector(x, y)
+      else PVector(x + cellSize / 2, y)
     }
   }
 }

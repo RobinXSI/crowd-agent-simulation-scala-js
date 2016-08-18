@@ -28,40 +28,43 @@ class SimulationMap(val grid: Vector[Vector[Cell]]) {
   }
 
   private def topLeft(cell: Cell): Option[Cell] = {
-    if (cell.coordinate.y - 1 < 0 || cell.coordinate.x - 1 < 0) None
-    else if (cell.coordinate.y % 2 == 0) get(Coordinate(cell.coordinate.x - 1, cell.coordinate.y - 1))
-    else get(Coordinate(cell.coordinate.x, cell.coordinate.y - 1))
+    if (cell.position.y - 1 < 0 || cell.position.x - 1 < 0) None
+    else if (cell.position.y % 2 == 0) get(PVector(cell.position.x - 1, cell.position.y - 1))
+    else get(PVector(cell.position.x, cell.position.y - 1))
   }
 
   private def topRight(cell: Cell): Option[Cell] = {
-    if (cell.coordinate.y - 1 < 0 || cell.coordinate.x + 1 >= width) None
-    else if (cell.coordinate.y % 2 == 0) get(Coordinate(cell.coordinate.x, cell.coordinate.y - 1))
-    else get(Coordinate(cell.coordinate.x + 1, cell.coordinate.y - 1))
+    if (cell.position.y - 1 < 0 || cell.position.x + 1 >= width) None
+    else if (cell.position.y % 2 == 0) get(PVector(cell.position.x, cell.position.y - 1))
+    else get(PVector(cell.position.x + 1, cell.position.y - 1))
   }
 
   private def right(cell: Cell): Option[Cell] = {
-    if (cell.coordinate.x + 1 >= width) None
-    else get(Coordinate(cell.coordinate.x + 1, cell.coordinate.y))
+    if (cell.position.x + 1 >= width) None
+    else get(PVector(cell.position.x + 1, cell.position.y))
   }
 
   private def bottomRight(cell: Cell): Option[Cell] = {
-    if (cell.coordinate.y + 1 >= height || cell.coordinate.x + 1 >= width) None
-    else if (cell.coordinate.y % 2 == 0) get(Coordinate(cell.coordinate.x, cell.coordinate.y + 1))
-    else get(Coordinate(cell.coordinate.x + 1, cell.coordinate.y + 1))
+    if (cell.position.y + 1 >= height || cell.position.x + 1 >= width) None
+    else if (cell.position.y % 2 == 0) get(PVector(cell.position.x, cell.position.y + 1))
+    else get(PVector(cell.position.x + 1, cell.position.y + 1))
   }
 
   private def bottomLeft(cell: Cell): Option[Cell] = {
-    if (cell.coordinate.y + 1 >= height || cell.coordinate.x - 1 < 0) None
-    else if (cell.coordinate.y % 2 == 0) get(Coordinate(cell.coordinate.x - 1, cell.coordinate.y + 1))
-    else get(Coordinate(cell.coordinate.x, cell.coordinate.y + 1))
+    if (cell.position.y + 1 >= height || cell.position.x - 1 < 0) None
+    else if (cell.position.y % 2 == 0) get(PVector(cell.position.x - 1, cell.position.y + 1))
+    else get(PVector(cell.position.x, cell.position.y + 1))
   }
 
   private def left(cell: Cell): Option[Cell] = {
-    if (cell.coordinate.x - 1 < 0) None
-    else get(Coordinate(cell.coordinate.x - 1, cell.coordinate.y))
+    if (cell.position.x - 1 < 0) None
+    else get(PVector(cell.position.x - 1, cell.position.y))
   }
 
-  def get(coordinate: Coordinate): Option[Cell] = Some(grid(coordinate.y.toInt)(coordinate.x.toInt))
+  def get(coordinate: PVector): Option[Cell] = Some(grid(coordinate.y.toInt)(coordinate.x.toInt))
+  def mapHexagonalCoordinate(hexagonalCoordinate: PVector): PVector = {
+    PVector(0, 0)
+  }
 
 
 }
