@@ -57,7 +57,7 @@ class GridVisualizer(canvas: Canvas) {
     ctx.stroke()
   }
 
-  def hexagonalCalculatorCenter(): (PVector) => PVector  = {
+  def hexagonalCalculatorCenter(): (PVector) => PVector = {
     (coordinate: PVector) => {
       val x = coordinate.x * cellSize + 0.5 * cellSize
       val y = coordinate.y * widthToRadius(cellSize) * 3 / 4 * 2 + widthToRadius(cellSize)
@@ -68,12 +68,17 @@ class GridVisualizer(canvas: Canvas) {
   }
 
   def mapHexagonalCoordinate(hexagonalCoordinate: PVector): PVector = {
+    val q = (hexagonalCoordinate.x * math.sqrt(3) / 3 - hexagonalCoordinate.y / 3) / widthToRadius(cellSize)
+    val r = hexagonalCoordinate.y * 2 / 3 / widthToRadius(cellSize)
+    PVector(q.toInt, r.toInt)
+
+    // q = (x * sqrt(3)/3 - y / 3) / size
+    // r = y * 2/3 / size
+    // return hex_round(Hex(q, r))
+
+    /*val row = (hexagonalCoordinate.y / cellSize * 8 / 7).toInt
     val column = (hexagonalCoordinate.x / cellSize).toInt
-    val row = (hexagonalCoordinate.y / cellSize).toInt
-    /*int column = int(constrain(lookup.x/resolution,0,cols-1));
-    int row = int(constrain(lookup.y/resolution,0,rows-1));
-    return field[column][row].get();*/
     println(column, row)
-    PVector(column, row)
+    PVector(column, row)*/
   }
 }
