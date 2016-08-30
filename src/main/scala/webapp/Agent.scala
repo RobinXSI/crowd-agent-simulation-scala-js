@@ -12,7 +12,6 @@ class Agent(var position: PVector, maxSpeed: Double, maxForce: Double) {
 
   def run(): Unit = {
     update()
-    
   }
 
   def follow(simulationMap: SimulationMap): Unit = {

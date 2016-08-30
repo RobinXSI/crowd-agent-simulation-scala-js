@@ -4,6 +4,9 @@ import scala.scalajs.js.annotation.JSExport
 import org.scalajs.dom
 import org.scalajs.dom.html
 
+import scala.collection.immutable.IndexedSeq
+import scala.util.Random
+
 @JSExport
 object MainApp {
 
@@ -12,7 +15,7 @@ object MainApp {
     val ctx = canvas.getContext("2d").asInstanceOf[dom.CanvasRenderingContext2D]
     println(dom.window.innerHeight)
     println(dom.window.outerHeight)
-    canvas.width = dom.window.outerWidth
+    canvas.width = dom.window.outerWidth - 100
     canvas.height = dom.window.outerHeight - 200
 
     val simulationMap: SimulationMap = MapBuilder.createMap(
@@ -47,12 +50,22 @@ object MainApp {
     val gridVisualizer: GridVisualizer = new GridVisualizer(canvas)
     val directionVisualizer: DirectionVisualizer = new DirectionVisualizer(canvas)
     val pathFindAlgorithm: PathFindAlgorithm = new PathFindAlgorithm()
-    
+    val hexagonalCalculatorCenter: (PVector) => PVector = gridVisualizer.hexagonalCalculatorCenter()
+
+    pathFindAlgorithm.findPath(simulationMap)
+
+
+
+
+    val agents: IndexedSeq[Agent] = 1 to 20 map {
+      _ => new Agent(PVector(120 + Random.nextInt(100), 130 + Random.nextInt(100)), 5, 5)
+    }
+    val agentVisualizer: AgentVisualizer = new AgentVisualizer(canvas)
+
     def run() = {
-      pathFindAlgorithm.findPath(simulationMap)
       gridVisualizer.draw(simulationMap)
-      val hexagonalCalculatorCenter: (PVector) => PVector = gridVisualizer.hexagonalCalculatorCenter()
       directionVisualizer.draw(simulationMap, hexagonalCalculatorCenter)
+      agentVisualizer.draw(simulationMap, hexagonalCalculatorCenter, agents)
     }
 
     dom.window.setInterval(() => run(), 50)

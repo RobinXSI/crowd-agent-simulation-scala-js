@@ -18,13 +18,6 @@ class GridVisualizer(canvas: Canvas) {
     cellSize = math.min(canvas.width / (simulationMap.width + 0.5), canvas.height / (simulationMap.height + 0.5))
     createHexagon(cell.position, cell.state)
     val centerOfHexagon: PVector = hexagonalCalculatorCenter()(cell.position)
-
-//    if (cell.state == Wall) ctx.fillStyle = "white"
-//    else ctx.fillStyle = "blue"
-//    ctx.lineWidth = 2
-//    ctx.font = "4 px Arial"
-//    ctx.textAlign = "center"
-//    ctx.fillText(cell.toString,centerOfHexagon.x,centerOfHexagon.y - 10)
   }
 
   private def widthToRadius(width: Double): Double = width / math.sqrt(3)
