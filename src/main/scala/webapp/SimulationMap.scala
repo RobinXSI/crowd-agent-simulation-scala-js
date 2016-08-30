@@ -67,7 +67,6 @@ class SimulationMap(val grid: Vector[Vector[Cell]]) {
     /*int column = int(constrain(lookup.x/resolution,0,cols-1));
     int row = int(constrain(lookup.y/resolution,0,rows-1));
     return field[column][row].get();*/
-    println(hexagonalCoordinate)
     PVector(0, 0)
   }
 

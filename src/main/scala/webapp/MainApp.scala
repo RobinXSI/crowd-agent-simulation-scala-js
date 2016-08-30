@@ -57,7 +57,7 @@ object MainApp {
 
 
 
-    val agents: IndexedSeq[Agent] = 1 to 20 map {
+    val agents: IndexedSeq[Agent] = 1 to 1 map {
       _ => new Agent(PVector(120 + Random.nextInt(100), 130 + Random.nextInt(100)), 5, 5)
     }
     val agentVisualizer: AgentVisualizer = new AgentVisualizer(canvas)
@@ -66,8 +66,17 @@ object MainApp {
       gridVisualizer.draw(simulationMap)
       directionVisualizer.draw(simulationMap, hexagonalCalculatorCenter)
       agentVisualizer.draw(simulationMap, hexagonalCalculatorCenter, agents)
+      for {
+        agent <- agents
+      } test(simulationMap, agent)
+
     }
 
     dom.window.setInterval(() => run(), 50)
+  }
+
+  def test(simulationMap: SimulationMap, agent: Agent) = {
+    agent.follow(simulationMap)
+    agent.run()
   }
 }
