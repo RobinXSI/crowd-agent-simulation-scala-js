@@ -62,13 +62,4 @@ class SimulationMap(val grid: Vector[Vector[Cell]]) {
   }
 
   def get(coordinate: PVector): Option[Cell] = Some(grid(coordinate.y.toInt)(coordinate.x.toInt))
-
-  def mapHexagonalCoordinate(hexagonalCoordinate: PVector): PVector = {
-    /*int column = int(constrain(lookup.x/resolution,0,cols-1));
-    int row = int(constrain(lookup.y/resolution,0,rows-1));
-    return field[column][row].get();*/
-    PVector(0, 0)
-  }
-
-
 }

@@ -14,13 +14,16 @@ class Agent(var position: PVector, maxSpeed: Double, maxForce: Double) {
     update()
   }
 
-  def follow(simulationMap: SimulationMap): Unit = {
-    val maybeCell: Cell = simulationMap.get(simulationMap.mapHexagonalCoordinate(position)).orNull
+  def follow(simulationMap: SimulationMap, actualCellPosition: PVector): Unit = {
+    val maybeCell: Cell = simulationMap.get(actualCellPosition).orNull
     // What is the vector at that spot in the flow field? Scale it up by maxspeed
-    val desired: PVector = maybeCell.goto.orNull.position * maxSpeed // TODO: Test if goto is needed for desired
+    val desired: PVector = maybeCell.goto match {
+      case Some(goto) => (goto.position - maybeCell.position) * maxSpeed
+      case None => PVector(0, 0) * maxSpeed
+    }
+//    val desired: PVector = maybeCell.goto.orNull.position * maxSpeed // TODO: Test if goto is needed for desired
     // Steering is desired minus velocity
     val steer: PVector = (desired - velocity) limit maxForce
-    println(velocity)
     applyForce(steer)
   }
   

@@ -66,4 +66,14 @@ class GridVisualizer(canvas: Canvas) {
       else PVector(x + cellSize / 2, y)
     }
   }
+
+  def mapHexagonalCoordinate(hexagonalCoordinate: PVector): PVector = {
+    val column = (hexagonalCoordinate.x / cellSize).toInt
+    val row = (hexagonalCoordinate.y / cellSize).toInt
+    /*int column = int(constrain(lookup.x/resolution,0,cols-1));
+    int row = int(constrain(lookup.y/resolution,0,rows-1));
+    return field[column][row].get();*/
+    println(column, row)
+    PVector(column, row)
+  }
 }
